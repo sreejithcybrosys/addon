@@ -4,3 +4,6 @@ language: python
     - nightly
   script:
     - pytest
+notifications:
+  email:
+    - sreeith@cybrosys.in
