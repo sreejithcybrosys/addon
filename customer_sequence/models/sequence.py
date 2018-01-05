@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
-from openerp.tools import amount_to_text_en
-from openerp import exceptions
+from openerp import models, fields
 
 
 class CustomerCode(models.Model):
@@ -14,32 +12,14 @@ class CustomerCode(models.Model):
         'uniqueid': lambda obj, cr, uid, context: '/',
     }
 
-    @api.one
-    def custom_code(self):
-        partner_name = self.name.split('[')
-        if len(partner_name) == 2:
-            if self.uniqueid == '/':
-                self.uniqueid = partner_name[1].split(']')[0]
-
     def create(self, cr, uid, vals, context=None):
         res = super(CustomerCode, self).create(cr, uid, vals, context=context)
         partner_rec = self.browse(cr, uid, res)
-        company_name = self.pool.get('res.company').browse(cr, uid, vals.get('company_id')).name
         user_obj = self.pool.get('res.users').browse(cr, uid, 1)
         if vals.get('company_id'):
             company_seq = self.pool.get('res.company').browse(cr, uid, vals.get('company_id'))
         else:
             company_seq = self.pool.get('res.users').browse(cr, uid, uid).company_id
-        count = 0
-        obj_partner = self.pool.get('res.partner').search(cr, uid, [('customer', '=', True)])
-        for partner_id in obj_partner:
-            partner = self.pool.get('res.partner').browse(cr, uid, partner_id)
-            if partner:
-                if vals['name'].strip().lower() == partner.name.strip().lower():
-                    count += 1
-        if count == 2:
-            raise exceptions.Warning(_("Warning"), _(
-                "There is already a customer with same name"))
         if partner_rec.customer == True and vals.get('uniqueid', '/') == '/':
             if company_seq.next_code:
                 partner_rec.uniqueid = company_seq.next_code
@@ -77,4 +57,3 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     supplier_code = fields.Integer(string='code')
-
