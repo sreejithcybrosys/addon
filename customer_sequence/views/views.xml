@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="uniqueid"/>
-                    <!--<button name="custom_code"  string="Code Generator"  type="object"/>-->
+                    <button name="custom_code"  string="Code Generator"  type="object"/>
                 </field>
 			  </field>
 		</record>

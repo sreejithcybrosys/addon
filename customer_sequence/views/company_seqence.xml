@@ -12,5 +12,15 @@
                 </xpath>
             </field>
         </record>
+        <record id="supplier_coding" model="ir.ui.view">
+            <field name="name">Company Supplier</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="supplier_code"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

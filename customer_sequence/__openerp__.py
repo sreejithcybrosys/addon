@@ -13,7 +13,7 @@
     'depends': ['sale', 'account'],
     'demo': [],
     'data': [
-        'views.xml',
+        'views/views.xml',
         'views/company_seqence.xml',
     ],
     'auto_install': False,

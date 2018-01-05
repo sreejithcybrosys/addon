@@ -1,3 +1,2 @@
 # -*- coding: utf-8 -*-
-import models
-import sequence
+from . import models
